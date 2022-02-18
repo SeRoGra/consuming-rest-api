@@ -18,12 +18,8 @@ class HttpRequestClass{
 	}
 
 	public function get($url){
-		$_this = new self;
-		$response = $_this->client->get($url);
-		//$response = $this->client->get($url);
-		return view('/posts.index', [
-            'response' => $response
-        ]);
+		$response = $this->client->get($url);
+		return $response;
 	}
 
 	public function post($url, $data){
