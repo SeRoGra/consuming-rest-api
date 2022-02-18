@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\HttpRequestClass;
+use App\Repositories\Posts;
 
 
 class PostsController extends Controller
@@ -13,9 +13,19 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private $posts;
+
+    public function __construct(Posts $posts){
+        $this->posts = $posts;
+    }
+
     public function index()
     {
-        return HttpRequestClass::get('posts');
+        $posts = $this->posts->all();
+        return view('/posts.index', [
+            'response' => $posts
+        ]);
     }
 
     /**
@@ -47,7 +57,10 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        //
+        $posts = $this->posts->find($id);
+        return view('/posts.show', [
+            'response' => $posts
+        ]);
     }
 
     /**
